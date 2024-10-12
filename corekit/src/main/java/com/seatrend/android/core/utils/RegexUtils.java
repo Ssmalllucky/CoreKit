@@ -1,4 +1,4 @@
-package com.seatrend.android.corekitapplication.utils;
+package com.seatrend.android.core.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
