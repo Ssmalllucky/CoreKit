@@ -179,4 +179,12 @@ public class RegexUtils {
         String regex = "[1-9](\\d{1,2})?\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))";
         return Pattern.matches(regex, ipAddress);
     }
+
+    /**
+     * 正则表达式-判断是否为数字
+     */
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
+    }
 }
