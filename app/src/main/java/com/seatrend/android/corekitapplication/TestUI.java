@@ -1,4 +1,4 @@
-package com.seatrend.android.corekitapplication;
+package com.seatrend.android.corekit;
 
 import android.os.Bundle;
 import android.util.Log;

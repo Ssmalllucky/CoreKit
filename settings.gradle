@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CoreKitApplication"
+rootProject.name = "CoreKit"
 include ':app'
 include ':corekit'

@@ -1,4 +1,4 @@
-package com.seatrend.android.corekitapplication.utils;
+package com.seatrend.android.corekit.utils;
 
 import android.content.Context;
 import android.content.Intent;

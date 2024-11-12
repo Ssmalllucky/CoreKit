@@ -1,4 +1,4 @@
-package com.seatrend.android.corekitapplication;
+package com.seatrend.android.corekit;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.seatrend.android.corekitapplication", appContext.getPackageName());
+        assertEquals("com.seatrend.android.corekit", appContext.getPackageName());
     }
 }

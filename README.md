@@ -1,1 +1,1 @@
-# CoreKitApplication
+# CoreKit

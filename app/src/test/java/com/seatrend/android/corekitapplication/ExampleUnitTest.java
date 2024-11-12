@@ -1,4 +1,4 @@
-package com.seatrend.android.corekitapplication;
+package com.seatrend.android.corekit;
 
 import org.junit.Test;
 
