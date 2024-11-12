@@ -28,6 +28,24 @@ android {
     }
 }
 
+task updateMarkdown {
+    doLast {
+//        def gitLog = 'git log -1 --pretty=format:"%h - %an, %ar : %s"'.execute().text.trim()
+        def gitLog = 'git log -1 --pretty=format:"%s"'.execute().text.trim()
+        def markdownFile = file("${project.rootDir}/CHANGELOG.md")
+
+        // 读取现有的文件内容
+        def currentContent = markdownFile.text
+        // 将新的提交记录追加到文件末尾
+        def newContent = currentContent + "\n\n## Latest Commit\n" + gitLog
+        markdownFile.write(newContent)
+    }
+}
+
+// 在 assembleDebug 任务前执行 updateMarkdown 任务
+preBuild.dependsOn updateMarkdown
+
+
 dependencies {
 
     implementation libs.appcompat
