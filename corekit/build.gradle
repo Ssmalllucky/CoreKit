@@ -2,13 +2,23 @@ plugins {
     alias(libs.plugins.android.library)
 }
 
+//版本号（改动条件：完全重构 或 重要功能的改动）
+def versionValue = "2"
+
+//发布号（改动条件：功能的改动 或 错误的修复）
+def releaseValue = "0"
+
+//固定号（改动条件：此AAR的任意调整）
+def fixValue = releaseTime()
+
 android {
     namespace 'com.seatrend.android.core'
     compileSdk 34
 
     defaultConfig {
         minSdk 24
-
+        targetSdk 28
+        versionName "$versionValue.$releaseValue.$fixValue"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -23,6 +33,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    libraryVariants.configureEach { variant ->
+        variant.outputs.configureEach {outputs ->
+            outputFileName = "corekit_V${defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyMMdd", TimeZone.getTimeZone("GMT+8"))
 }
 
 dependencies {
@@ -32,4 +52,5 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation libs.scottyab.rootbeer.lib
 }
