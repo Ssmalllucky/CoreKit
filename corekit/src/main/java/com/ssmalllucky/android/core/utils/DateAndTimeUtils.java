@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * 日期和时间格式转换工具类
  *
- * @author shuaijialin
+ * @author ssmalllucky
  */
 public class DateAndTimeUtils {
 

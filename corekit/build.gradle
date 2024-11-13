@@ -17,6 +17,7 @@ android {
 
     defaultConfig {
         minSdk 24
+        //noinspection ExpiredTargetSdkVersion
         targetSdk 28
         versionName "$versionValue.$releaseValue.$fixValue"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,4 +54,5 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     implementation libs.scottyab.rootbeer.lib
+    implementation libs.gson
 }

@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 /**
  * @ClassName ResourceUtils
- * @Author shuaijialin
+ * @Author ssmalllucky
  * @Date 2024/10/17
  * @Description APP 资源获取工具类
  */

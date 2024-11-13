@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * @ClassName BitmapUtils
- * @Author shuaijialin
+ * @Author ssmalllucky
  * @Date 2023/7/26
  * @Description
  */

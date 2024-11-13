@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * @ClassName RegexUtils
- * @Author shuaijialin
+ * @Author ssmalllucky
  * @Date 2024/10/12
  * @Description Java 表单注册常用正则表达式验证工具类，常用正则表达式大集合。
  * <br />

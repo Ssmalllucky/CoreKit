@@ -9,7 +9,7 @@ import com.scottyab.rootbeer.RootBeer;
 
 /**
  * @ClassName SecurityChecker
- * @Author shuaijialin
+ * @Author ssmalllucky
  * @Date 2024/10/11
  * @Description 安全检查工具类，用于检查设备是否处于安全状态
  */
