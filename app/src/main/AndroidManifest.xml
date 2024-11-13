@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CoreKit"
         tools:targetApi="31">
         <activity
-            android:name="com.seatrend.android.corekit.TestUI"
+            android:name="com.ssmalllucky.android.corekit.TestUI"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
