@@ -1,18 +1,34 @@
 plugins {
     alias(libs.plugins.android.library)
+    id 'maven-publish'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+//                from components.release
+
+                groupId = "com.ssmalllucky.android"
+                artifactId = "corekit"
+                version = "1.0.1"
+            }
+        }
+    }
 }
 
 //版本号（改动条件：完全重构 或 重要功能的改动）
-def versionValue = "2"
+def versionValue = "1"
 
 //发布号（改动条件：功能的改动 或 错误的修复）
 def releaseValue = "0"
 
 //固定号（改动条件：此AAR的任意调整）
-def fixValue = releaseTime()
+//def fixValue = releaseTime()
+def fixValue = "1"
 
 android {
-    namespace 'com.seatrend.android.core'
+    namespace 'com.ssmalllucky.android.core'
     compileSdk 34
 
     defaultConfig {

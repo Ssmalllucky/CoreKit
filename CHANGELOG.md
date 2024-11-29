@@ -22,3 +22,6 @@ feat(): ResourceUtils 新增函数。
 
 ## Latest Commit
 feat(): ResourceUtils 新增函数。
+
+## Latest Commit
+fix(): 修复运行闪退的问题。

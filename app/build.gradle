@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.seatrend.android.corekit'
+    namespace 'com.ssmalllucky.android.corekit'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.seatrend.android.corekit"
+        applicationId "com.ssmalllucky.android.corekit"
         minSdk 24
         targetSdk 34
         versionCode 1
