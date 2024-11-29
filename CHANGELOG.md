@@ -13,3 +13,12 @@ feat(): 添加 Markdown 文件读取解析类。
 
 ## Latest Commit
 feat(): 添加 Markdown 文件读取解析类。
+
+## Latest Commit
+feat(): ResourceUtils 新增函数。
+
+## Latest Commit
+feat(): ResourceUtils 新增函数。
+
+## Latest Commit
+feat(): ResourceUtils 新增函数。

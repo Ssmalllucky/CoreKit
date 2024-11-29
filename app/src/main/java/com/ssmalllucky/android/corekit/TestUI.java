@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.seatrend.android.corekit.R;
 import com.ssmalllucky.android.core.utils.DateAndTimeUtils;
 
 /**
