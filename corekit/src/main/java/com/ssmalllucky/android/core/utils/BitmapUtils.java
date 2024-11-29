@@ -4,7 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.os.Build;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
@@ -140,6 +148,7 @@ public class BitmapUtils {
 
     /**
      * 获取Bitmap内存占用
+     *
      * @param bitmap
      * @return
      */
@@ -158,5 +167,68 @@ public class BitmapUtils {
         }
 
         return bitmap.getRowBytes() * bitmap.getHeight();
+    }
+
+    /**
+     * 给 Bitmap 添加水印，支持添加多行水印。
+     *
+     * @param context     上下文
+     * @param bitmap      Bitmap图片对象
+     * @param waterString 水印内容
+     * @return
+     */
+    public static Bitmap addWaterMaskingToBitmap(Context context, Bitmap bitmap, String waterString) {
+
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+
+        int textHeight = h / 20;
+        int textSize = w / 80;
+
+        try {
+
+            Bitmap newBitmap = Bitmap.createBitmap(w, h + textHeight, Bitmap.Config.RGB_565);
+
+            Canvas whiteCanvas = new Canvas(newBitmap);
+
+            // 绘制文本内容，可能包含多行文本，所以不能使用 drawText，应该使用 StaticLayout
+            TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+            textPaint.setColor(Color.GRAY);
+            textPaint.setTextSize(dip2px(context, textSize));
+            StaticLayout staticLayout = new StaticLayout(waterString, textPaint, whiteCanvas.getWidth(), Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, false);
+            newBitmap.recycle();
+            newBitmap = Bitmap.createBitmap(w, h + staticLayout.getHeight(), Bitmap.Config.RGB_565);
+            whiteCanvas = new Canvas(newBitmap);
+
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            whiteCanvas.drawARGB(255, 255, 255, 255);
+            paint.setColor(Color.GRAY);
+            whiteCanvas.drawBitmap(bitmap, 0, 0, paint);
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
+            whiteCanvas.drawRect(0, 0, w, h + textHeight, paint);
+            Paint bitpaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            bitpaint.setColor(Color.GRAY);
+            bitpaint.setTextSize(dip2px(context, textSize));
+            Rect bounds = new Rect();
+            bitpaint.getTextBounds(waterString, 0, waterString.length(), bounds);
+
+            float y = whiteCanvas.getHeight() - staticLayout.getHeight();
+            whiteCanvas.save();
+            whiteCanvas.translate(20, y);
+            staticLayout.draw(whiteCanvas);
+            whiteCanvas.restore();
+            return newBitmap;
+        } catch (OutOfMemoryError e) {
+            return null;
+        }
+    }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 }

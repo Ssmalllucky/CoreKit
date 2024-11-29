@@ -1,29 +1,29 @@
 plugins {
     alias(libs.plugins.android.library)
-    id 'maven-publish'
+//    id 'maven-publish'
 }
 
-afterEvaluate {
-    publishing {
-        // 配置maven 仓库
-        repositories {
-            // build/outputs/maven_repo
-            maven { url uri(new File(buildDir, "outputs/maven_repo").path) }
-        }
-        // 配置发布产物
-        publications {
-            release(MavenPublication) { // 容器可配置的信息 MavenPublication
-                // 注：AGP 3.6.0 及以上才能使用，作用是将 Android Gradle 插件生成的组件，作为发布的内容
-                from components.findByName('release')
-
-                groupId "com.ssmalllucky.android"
-                artifactId "corekit"
-                version "1.0.3"
-
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        // 配置maven 仓库
+//        repositories {
+//            // build/outputs/maven_repo
+//            maven { url uri(new File(buildDir, "outputs/maven_repo").path) }
+//        }
+//        // 配置发布产物
+//        publications {
+//            release(MavenPublication) { // 容器可配置的信息 MavenPublication
+//                // 注：AGP 3.6.0 及以上才能使用，作用是将 Android Gradle 插件生成的组件，作为发布的内容
+//                from components.findByName('release')
+//
+//                groupId "com.ssmalllucky.android"
+//                artifactId "corekit"
+//                version "1.0.3"
+//
+//            }
+//        }
+//    }
+//}
 
 //版本号（改动条件：完全重构 或 重要功能的改动）
 def versionValue = "1"
@@ -50,7 +50,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -62,6 +62,29 @@ android {
     libraryVariants.configureEach { variant ->
         variant.outputs.configureEach { outputs ->
             outputFileName = "corekit_V${defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+tasks.register('updateMarkdown') {
+    doLast {
+//        if (!project.hasProperty('debug')) {
+        if (!project.gradle.startParameter.taskNames.any { it.contains("Debug") }) {
+            println "Debug mode detected. Skipping appending Git commit to markdown."
+            // 获取最近一次提交信息并追加到文件的逻辑
+//        def gitLog = 'git log -1 --pretty=format:"%h - %an, %ar : %s"'.execute().text.trim()
+//            def gitLog = 'git log -1 --pretty=format:"%s"'.execute().text
+            def gitLog = 'git log -1 --pretty=format:"%s%n%n%b"'.execute().text.trim()
+            println(gitLog)
+            gitLog = gitLog.substring(gitLog.indexOf(":") + 1).trim()
+            gitLog = gitLog.substring(0, gitLog.indexOf("Change-Id")).trim()
+            def markdownFile = file("${project.rootDir}/app/src/main/assets/CHANGELOG.md")
+
+            // 读取现有的文件内容
+            def currentContent = markdownFile.text
+            // 将新的提交记录追加到文件末尾
+            def newContent = "### " + android.defaultConfig.versionName + "\n" + gitLog + "\n\n" + currentContent
+            markdownFile.write(newContent)
         }
     }
 }
