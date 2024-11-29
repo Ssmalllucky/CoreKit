@@ -5,13 +5,21 @@ plugins {
 
 afterEvaluate {
     publishing {
+        // 配置maven 仓库
+        repositories {
+            // build/outputs/maven_repo
+            maven { url uri(new File(buildDir, "outputs/maven_repo").path) }
+        }
+        // 配置发布产物
         publications {
-            release(MavenPublication) {
-//                from components.release
+            release(MavenPublication) { // 容器可配置的信息 MavenPublication
+                // 注：AGP 3.6.0 及以上才能使用，作用是将 Android Gradle 插件生成的组件，作为发布的内容
+                from components.findByName('release')
 
-                groupId = "com.ssmalllucky.android"
-                artifactId = "corekit"
-                version = "1.0.1"
+                groupId "com.ssmalllucky.android"
+                artifactId "corekit"
+                version "1.0.3"
+
             }
         }
     }
@@ -25,7 +33,7 @@ def releaseValue = "0"
 
 //固定号（改动条件：此AAR的任意调整）
 //def fixValue = releaseTime()
-def fixValue = "1"
+def fixValue = "3"
 
 android {
     namespace 'com.ssmalllucky.android.core'
@@ -42,7 +50,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,7 +60,7 @@ android {
     }
 
     libraryVariants.configureEach { variant ->
-        variant.outputs.configureEach {outputs ->
+        variant.outputs.configureEach { outputs ->
             outputFileName = "corekit_V${defaultConfig.versionName}.aar"
         }
     }
