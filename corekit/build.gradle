@@ -76,9 +76,9 @@ tasks.register('updateMarkdown') {
 //            def gitLog = 'git log -1 --pretty=format:"%s"'.execute().text
             def gitLog = 'git log -1 --pretty=format:"%s%n%n%b"'.execute().text.trim()
             println(gitLog)
-            gitLog = gitLog.substring(gitLog.indexOf(":") + 1).trim()
-            gitLog = gitLog.substring(0, gitLog.indexOf("Change-Id")).trim()
-            def markdownFile = file("${project.rootDir}/app/src/main/assets/CHANGELOG.md")
+//            gitLog = gitLog.substring(gitLog.indexOf(":") + 1).trim()
+//            gitLog = gitLog.substring(0, gitLog.indexOf("Change-Id")).trim()
+            def markdownFile = file("${project.rootDir}/CHANGELOG.md")
 
             // 读取现有的文件内容
             def currentContent = markdownFile.text
@@ -88,6 +88,8 @@ tasks.register('updateMarkdown') {
         }
     }
 }
+// 在 assembleDebug 任务前执行 updateMarkdown 任务
+preBuild.dependsOn updateMarkdown
 
 static def releaseTime() {
     return new Date().format("yyMMdd", TimeZone.getTimeZone("GMT+8"))
