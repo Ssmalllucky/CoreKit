@@ -83,7 +83,7 @@ tasks.register('updateMarkdown') {
             // 读取现有的文件内容
             def currentContent = markdownFile.text
             // 将新的提交记录追加到文件末尾
-            def newContent = "### " + android.defaultConfig.versionName + "\n" + gitLog + "\n\n" + currentContent
+            def newContent = "### " + android.defaultConfig.versionName + "(" + releaseTime() + ")\n" + gitLog + "\n\n" + currentContent
             markdownFile.write(newContent)
         }
     }

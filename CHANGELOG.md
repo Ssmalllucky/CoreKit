@@ -1,4 +1,7 @@
 ### 1.0.3
+feat(): 增加存储空间大小获取工具函数
+
+### 1.0.3
 feat(): BitmapUtils，添加水印处理函数。
 
 ### 1.0.3
@@ -211,3 +214,24 @@ feat(): BitmapUtils，添加水印处理函数。
 
 ## Latest Commit
 feat(): BitmapUtils，添加水印处理函数。
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 增加存储空间大小获取工具函数

@@ -97,6 +97,7 @@ public class StorageUtils {
 
     /**
      * Android 获取内置存储空间大小（适用于Android 8.0以下）
+     *
      * @param context
      * @param format
      * @return
@@ -110,6 +111,7 @@ public class StorageUtils {
 
     /**
      * 获取外置存储空间大小（适用于Android 8.0以下）
+     *
      * @param context
      * @param format
      * @return
@@ -122,7 +124,8 @@ public class StorageUtils {
     }
 
     /**
-     *  获取外置存储空间大小（long类型，适用于Android 8.0以下）
+     * 获取外置存储空间大小（long类型，适用于Android 8.0以下）
+     *
      * @param context
      * @return
      */
@@ -150,6 +153,7 @@ public class StorageUtils {
 
     /**
      * 获取内置存储空间大小（long类型，适用于Android 8.0以下）
+     *
      * @param context
      * @return
      */
@@ -206,21 +210,37 @@ public class StorageUtils {
                     break;
                 }
             }
-        }
 
-        // 如果目标单位无效，默认返回字节数
-        if (targetIndex == -1) {
-//            return String.format("%.2f %s", (double) sizeInBytes, "B");
-            targetIndex = 3;
-        }
+            if (targetIndex != -1) {
+                // 转换到目标单位
+                for (int i = 0; i < targetIndex; i++) {
+                    size /= 1024; // 每次除以1024，向目标单位逼近
+                }
 
-        // 转换到目标单位
-        for (int i = 0; i < targetIndex; i++) {
-            size /= 1024; // 每次除以1024，向目标单位逼近
+                // 格式化到两位小数
+                return String.format("%.2f %s", size, units[targetIndex]);
+            } else {
+                return getNearFormatSize(sizeInBytes);
+            }
+        } else {
+            return getNearFormatSize(sizeInBytes);
         }
+    }
 
-        // 格式化到两位小数
-        return String.format("%.2f %s", size, units[targetIndex]);
+    private static String getNearFormatSize(long sizeInBytes) {
+        final long KB = 1024;
+        final long MB = KB * 1024;
+        final long GB = MB * 1024;
+
+        if (sizeInBytes >= GB) {
+            return String.format("%.2f GB", (double) sizeInBytes / GB);
+        } else if (sizeInBytes >= MB) {
+            return String.format("%.2f MB", (double) sizeInBytes / MB);
+        } else if (sizeInBytes >= KB) {
+            return String.format("%.2f KB", (double) sizeInBytes / KB);
+        } else {
+            return sizeInBytes + " B";
+        }
     }
 
     /**
