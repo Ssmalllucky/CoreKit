@@ -1,3 +1,12 @@
+### 1.0.3(241212)
+feat(): 更新格式化存储占用大小函数。
+
+### 1.0.3(241212)
+feat(): 更新格式化存储占用大小函数。
+
+### 1.0.3(241212)
+feat(): 更新格式化存储占用大小函数。
+
 ### 1.0.3
 feat(): 增加存储空间大小获取工具函数
 
@@ -235,3 +244,42 @@ feat(): 增加存储空间大小获取工具函数
 
 ## Latest Commit
 feat(): 增加存储空间大小获取工具函数
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。
+
+## Latest Commit
+feat(): 更新格式化存储占用大小函数。

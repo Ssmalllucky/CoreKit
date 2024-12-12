@@ -1,22 +1,16 @@
 package com.ssmalllucky.android.corekit;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StatFs;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ssmalllucky.android.core.utils.StorageUtils;
-import com.ssmalllucky.android.corekit.R;
 import com.ssmalllucky.android.core.utils.DateAndTimeUtils;
 
 import java.io.File;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @ClassName TestClass
@@ -37,14 +31,11 @@ public class TestUI extends AppCompatActivity {
         String compareDate = "2024-10-29";
         Log.d(TAG, "onCreate: 比较日期 " + compareDate + " " + (DateAndTimeUtils.compareDateStrWithToday(compareDate) > 0 ? "小于" : "大于") + "当前日期");
 
-//        StorageUtils.get(this);
-//        StorageUtils.getInternalStorageSize(this,null);
-//        StorageUtils.getExternalStorageSize(this,null);
-//
-//        StorageUtils.getAppPackageSize(this);
-//        StorageUtils.getPhoneUsedSize(null);
-//        StorageUtils.getTotalStorageSize(null);
-//
+        StorageUtils.getAppPackageSize(this);
+        StorageUtils.getAppUsedInternalStorageSize(this);
+        StorageUtils.getPhoneUsedSize(null);
+        StorageUtils.getInternalStorageTotalSize(this,null);
+
 //        for (int i = 0; i < getSpaceTotal().length; i++) {
 //            Log.d(TAG, "onCreate: " + i + ": " + getSpaceTotal()[i]);
 //        }

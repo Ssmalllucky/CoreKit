@@ -56,6 +56,7 @@ public class StorageUtils {
      *
      * @return 手机已使用的存储空间，以字节为单位
      */
+    @Deprecated
     public static long getPhoneUsedSpace() {
         File root = Environment.getDataDirectory(); // 获取手机根目录
         return getUsedSpace(root);
@@ -90,7 +91,7 @@ public class StorageUtils {
         // 根据指定的格式格式化总存储空间大小
         String formattedTotalSize = formatStorageSize(totalSpace, format);
         // 日志输出格式化后的总存储空间大小
-        Log.d(TAG, "phoneTotalSize: " + formattedTotalSize);
+        Log.d(TAG, "getTotalStorageSize: " + formattedTotalSize);
         // 返回格式化后的总存储空间大小字符串
         return formattedTotalSize;
     }
@@ -102,10 +103,10 @@ public class StorageUtils {
      * @param format
      * @return
      */
-    public static String getInternalStorageSize(Context context, String format) {
-        long space = getInternalStorageSpace(context);
+    public static String getInternalStorageTotalSize(Context context, String format) {
+        long space = getInternalStorageTotalSpace(context);
         String formattedSize = formatStorageSize(space, format);
-        Log.d(TAG, "internalStorageSize: " + formattedSize);
+        Log.d(TAG, "getInternalStorageTotalSize: " + formattedSize);
         return formattedSize;
     }
 
@@ -119,7 +120,7 @@ public class StorageUtils {
     public static String getExternalStorageSize(Context context, String format) {
         long space = getExternalStorageSpace(context);
         String formattedSize = formatStorageSize(space, format);
-        Log.d(TAG, "externalStorageSize: " + formattedSize);
+        Log.d(TAG, "getExternalStorageSize: " + formattedSize);
         return formattedSize;
     }
 
@@ -157,16 +158,10 @@ public class StorageUtils {
      * @param context
      * @return
      */
-    public static long getInternalStorageSpace(Context context) {
+    public static long getInternalStorageTotalSpace(Context context) {
         File filesDir = context.getFilesDir();
         return filesDir.getTotalSpace();
     }
-
-    public static long getFreeSpace(Context context) {
-        File filesDir = context.getFilesDir();
-        return filesDir.getFreeSpace();
-    }
-
 
     /**
      * 获取设备的总存储空间
@@ -227,6 +222,12 @@ public class StorageUtils {
         }
     }
 
+    /**
+     * 获取最接近的格式化存储大小
+     *
+     * @param sizeInBytes 需要格式化的存储大小，以字节为单位
+     * @return 格式化后的存储大小字符串，形如 "123.45 KB"
+     */
     private static String getNearFormatSize(long sizeInBytes) {
         final long KB = 1024;
         final long MB = KB * 1024;
@@ -241,29 +242,6 @@ public class StorageUtils {
         } else {
             return sizeInBytes + " B";
         }
-    }
-
-    /**
-     * 获取应用的存储空间大小并按指定格式返回
-     *
-     * @param context 应用上下文，用于访问应用的资源和数据库
-     * @param format  指定的格式字符串，用于定义返回的存储空间大小的格式
-     * @return 格式化后的存储空间大小字符串
-     */
-    public static String getAppStorageSize(Context context, String format) {
-        // 获取设备的总存储空间大小（字节）
-        long totalSpace = getAppStorageSpace(context);
-
-        if (totalSpace == -1) {
-            return null;
-        }
-
-        // 根据指定的格式格式化总存储空间大小
-        String formattedSize = formatStorageSize(totalSpace, format);
-        // 日志输出格式化后的总存储空间大小
-        Log.d(TAG, "appStorageSize: " + formattedSize);
-        // 返回格式化后的总存储空间大小字符串
-        return formattedSize;
     }
 
     // 获取应用占用的存储空间（单位：字节）
@@ -336,14 +314,60 @@ public class StorageUtils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            try {
+                String apkPath = context.getPackageManager()
+                        .getApplicationInfo(context.getPackageName(), 0).sourceDir;
+                Log.d(TAG, "apkPath: " + apkPath);
+                File file = new File(apkPath);
+                return file.length();
+            } catch (PackageManager.NameNotFoundException e) {
+                return 0L;
+            }
         }
         return 0L;
     }
 
+    /**
+     * 获取应用存储空间大小并按指定格式返回
+     * <p>
+     * Android 8.0以上版本调用此方法
+     *
+     * @param context
+     * @return
+     */
     public static String getAppPackageSize(Context context) {
         long appPackageSpace = getAppPackageSpace(context);
-        String formattedSize = formatStorageSize(appPackageSpace, StorageUtils.FORMAT_MB);
-        Log.d(TAG, "appPackageSize: " + formattedSize);
+        String formattedSize = formatStorageSize(appPackageSpace, null);
+        Log.d(TAG, "getAppPackageSize: " + formattedSize);
         return formattedSize;
+    }
+
+    /**
+     * 获取应用内部存储空间大小并按指定格式返回
+     * <p>
+     * Android 8.0以下版本调用此方法
+     *
+     * @param context
+     * @return
+     */
+    public static String getAppUsedInternalStorageSize(Context context) {
+        long appPackageSpace = getAppUsedInternalStorageSpace(context);
+        String formattedSize = formatStorageSize(appPackageSpace, null);
+        Log.d(TAG, "getAppInternalStorageSize: " + formattedSize);
+        return formattedSize;
+    }
+
+    public static long getAppUsedInternalStorageSpace(Context context) {
+        long size = 0;
+        try {
+            File directory = new File("/data/data/" + context.getPackageName());
+            if (directory != null && directory.isDirectory()) {
+                return getFolderSize(directory);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
     }
 }
